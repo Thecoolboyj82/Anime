@@ -176,55 +176,55 @@
 
     <!-- Custom JavaScript for Episode Switching and Breadcrumb Update -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const episodeLinks = document.querySelectorAll('.anime__details__episodes a');
-            const videoPlayer = document.getElementById('drive-player');
-            const episodeLabel = document.getElementById('episode-label');
-            const nextSeasonLink = document.getElementById('next-season');
+    document.addEventListener('DOMContentLoaded', function() {
+        const episodeLinks = document.querySelectorAll('.anime__details__episodes a');
+        const videoPlayer = document.getElementById('drive-player');
+        const episodeLabel = document.getElementById('episode-label');
+        const nextSeasonLink = document.getElementById('next-season');
 
-            // Function to update video, breadcrumb, and active link
-            function updateEpisode(episodeNumber) {
-                const episodeLink = Array.from(episodeLinks).find(link => link.getAttribute('data-episode') === episodeNumber);
+        // Function to update video, breadcrumb, and active link
+        function updateEpisode(episodeNumber) {
+            const episodeLink = Array.from(episodeLinks).find(link => link.getAttribute('data-episode') === episodeNumber);
 
-                // Update the video player and breadcrumb label
-                if (episodeLink) {
-                    videoPlayer.setAttribute('src', episodeLink.getAttribute('data-video-url'));
-                    episodeLabel.textContent = `Episode ${episodeNumber}`;
-                    localStorage.setItem('lastWatchedEpisode', episodeNumber); // Store last watched episode
+            // Update the video player and breadcrumb label
+            if (episodeLink) {
+                videoPlayer.setAttribute('src', episodeLink.getAttribute('data-video-url'));
+                episodeLabel.textContent = `Episode ${episodeNumber}`;
+                localStorage.setItem('lastWatchedEpisode', episodeNumber); // Store last watched episode
 
-                    // Remove 'active' class from all links, then add it to the current link
-                    episodeLinks.forEach(link => link.classList.remove('active'));
-                    episodeLink.classList.add('active');
-                }
+                // Remove 'active' class from all links, then add it to the current link
+                episodeLinks.forEach(link => link.classList.remove('active'));
+                episodeLink.classList.add('active');
             }
+        }
 
-            // Get the episode number from URL query parameters or localStorage
-            const urlParams = new URLSearchParams(window.location.search);
-            const episodeNumber = urlParams.get('episode') || localStorage.getItem('lastWatchedEpisode') || '01';
-            updateEpisode(episodeNumber);  // Highlight the correct episode on page load
+        // Get the episode number from URL query parameters or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const episodeNumber = urlParams.get('episode') || localStorage.getItem('lastWatchedEpisode') || '01';
+        updateEpisode(episodeNumber);  // Highlight the correct episode on page load
 
-            // Handle episode switching
-            episodeLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const episode = this.getAttribute('data-episode');
-                    updateEpisode(episode);
-                    // Update the URL query parameter without reloading the page
-                    history.pushState(null, '', `?episode=${episode}`);
-                });
+        // Handle episode switching
+        episodeLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const episode = this.getAttribute('data-episode');
+                updateEpisode(episode);
+                // Update the URL query parameter without reloading the page
+                history.pushState(null, '', `?episode=${episode}`);
             });
-
-            // Handle Next Season button click
-            if (nextSeasonLink) {
-                nextSeasonLink.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const nextSeasonUrl = this.getAttribute('data-next-season-url');
-                    // Navigate to the next season with the last watched episode number
-                    window.location.href = `${nextSeasonUrl}?episode=${localStorage.getItem('lastWatchedEpisode') || '01'}`;
-                });
-            }
         });
-    </script>
+
+        // Handle Next Season button click
+        if (nextSeasonLink) {
+            nextSeasonLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                const nextSeasonUrl = this.getAttribute('data-next-season-url');
+                // Navigate to the next season with the last watched episode number
+                window.location.href = `${nextSeasonUrl}?episode=${localStorage.getItem('lastWatchedEpisode') || '01'}`;
+            });
+        }
+    });
+</script>
 </body>
 
 </html>
