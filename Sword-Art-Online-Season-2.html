@@ -223,14 +223,22 @@
         if (nextSeasonLink) {
             nextSeasonLink.addEventListener('click', function(event) {
                 event.preventDefault();
-                const nextSeasonUrl = this.getAttribute('data-next-season-url');
                 const lastWatchedEpisode = localStorage.getItem(storageKey) || '01'; // Get last watched episode from the current season
-                // Navigate to the next season and carry over the episode number
-                window.location.href = `${nextSeasonUrl}?season=${parseInt(currentSeason) + 1}&episode=${lastWatchedEpisode}`;
+                const nextSeasonUrl = this.getAttribute('data-next-season-url');
+                
+                // Ensure the episode is properly passed as a URL parameter
+                if (lastWatchedEpisode) {
+                    // Navigate to the next season and carry over the episode number
+                    window.location.href = `${nextSeasonUrl}?season=${parseInt(currentSeason) + 1}&episode=${lastWatchedEpisode}`;
+                } else {
+                    // Fallback if no last watched episode is found
+                    window.location.href = `${nextSeasonUrl}?season=${parseInt(currentSeason) + 1}&episode=01`;
+                }
             });
         }
     });
 </script>
+
 </body>
 
 </html>
