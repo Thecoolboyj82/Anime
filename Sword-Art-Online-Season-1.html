@@ -182,15 +182,22 @@
         const episodeLabel = document.getElementById('episode-label');
         const nextSeasonLink = document.getElementById('next-season');
 
-        // Function to update video, breadcrumb, and active link
+        // Get current season from the URL or default to Season 1
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentSeason = urlParams.get('season') || '1'; // Default to season 1 if no season is provided
+
+        // Create a storage key that is unique to the current season
+        const storageKey = `lastWatchedEpisode_S${currentSeason}`;
+
+        // Function to update the video player, breadcrumb, and active link
         function updateEpisode(episodeNumber) {
             const episodeLink = Array.from(episodeLinks).find(link => link.getAttribute('data-episode') === episodeNumber);
 
             // Update the video player and breadcrumb label
             if (episodeLink) {
                 videoPlayer.setAttribute('src', episodeLink.getAttribute('data-video-url'));
-                episodeLabel.textContent = `Episode ${episodeNumber}`;
-                localStorage.setItem('lastWatchedEpisode', episodeNumber); // Store last watched episode
+                episodeLabel.textContent = `Season ${currentSeason}, Episode ${episodeNumber}`;
+                localStorage.setItem(storageKey, episodeNumber); // Store last watched episode for the current season
 
                 // Remove 'active' class from all links, then add it to the current link
                 episodeLinks.forEach(link => link.classList.remove('active'));
@@ -199,9 +206,8 @@
         }
 
         // Get the episode number from URL query parameters or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const episodeNumber = urlParams.get('episode') || localStorage.getItem('lastWatchedEpisode') || '01';
-        updateEpisode(episodeNumber);  // Highlight the correct episode on page load
+        const episodeNumber = urlParams.get('episode') || localStorage.getItem(storageKey) || '01';
+        updateEpisode(episodeNumber); // Highlight and load the correct episode on page load
 
         // Handle episode switching
         episodeLinks.forEach(link => {
@@ -210,7 +216,7 @@
                 const episode = this.getAttribute('data-episode');
                 updateEpisode(episode);
                 // Update the URL query parameter without reloading the page
-                history.pushState(null, '', `?episode=${episode}`);
+                history.pushState(null, '', `?season=${currentSeason}&episode=${episode}`);
             });
         });
 
@@ -219,8 +225,9 @@
             nextSeasonLink.addEventListener('click', function(event) {
                 event.preventDefault();
                 const nextSeasonUrl = this.getAttribute('data-next-season-url');
-                // Navigate to the next season with the last watched episode number
-                window.location.href = `${nextSeasonUrl}?episode=${localStorage.getItem('lastWatchedEpisode') || '01'}`;
+                const lastWatchedEpisode = localStorage.getItem(storageKey) || '01'; // Get last watched episode from the current season
+                // Navigate to the next season and carry over the episode number
+                window.location.href = `${nextSeasonUrl}?season=${parseInt(currentSeason) + 1}&episode=${lastWatchedEpisode}`;
             });
         }
     });
