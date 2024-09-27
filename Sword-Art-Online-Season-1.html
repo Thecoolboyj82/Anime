@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Anime Template">
@@ -114,11 +113,10 @@
                         <a href="#" data-video-url="https://drive.google.com/file/d/12PqDXXho8tcRF6ZwlpcFMxQeMw_BNeZG/preview" data-episode="19">Ep 19</a>
                         <a href="#" data-video-url="https://drive.google.com/file/d/1TtshM3NqVXY8Oy4gREPB5LyXeDS85BPZ/preview" data-episode="20">Ep 20</a>
                         <a href="#" data-video-url="https://drive.google.com/file/d/1zvGVywEC79ZWlnJ23VW6Xxk3s235NI41/preview" data-episode="21">Ep 21</a>
-                        <a href="#" data-video-url="https://drive.google.com/file/d/1MK2RxDegz58KiZBXzVlPc2NMSB4ddBeF/preview" data-episode="22">Ep 22</a>
-                        <a href="#" data-video-url="https://drive.google.com/file/d/1fi8zAxipMWg77Qols0vdxts0jygrO-sO/preview" data-episode="23">Ep 23</a>
-                        <a href="#" data-video-url="https://drive.google.com/file/d/1-02346D9ANBPW6nQVv6ZNkAAdbA3gzSb/preview" data-episode="24">Ep 24</a>
-                        <a href="#" data-video-url="https://drive.google.com/file/d/1-puDFSqBzNrRSKZvRmiwd83R1wxxmYU5/preview" data-episode="25">Ep 25</a>
-                        <a href="#" id="next-season" data-next-season-url="./Sword-Art-Online-Season-2.html">Next Season</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1xYrbA7T-xo4bE4J6-ZO8Sdxqqq9NwdEX/preview" data-episode="22">Ep 22</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1QqJhNHqCs-9x73sqYONkHH3DpzHfwov1/preview" data-episode="23">Ep 23</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1X7V7HL5wbdJ09NUVc_yi7t6c81gRUR58/preview" data-episode="24">Ep 24</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1WWAI9wn5OB9xAoP2VGDOVF2x-hbX3y60/preview" data-episode="25">Ep 25</a>
                     </div>
                 </div>
             </div>
@@ -128,24 +126,11 @@
 
     <!-- Footer Section Begin -->
     <footer class="footer">
-        <div class="page-up">
-            <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
-        </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="footer__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="footer__nav">
-                        <ul>
-                            <li class="active"><a href="./index.html">Homepage</a></li>
-                            <li><a href="./categories.html">Categories</a></li>
-                            <li><a href="./blog.html">Our Blog</a></li>
-                            <li><a href="#">Contacts</a></li>
-                        </ul>
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
                     </div>
                 </div>
             </div>
@@ -153,93 +138,55 @@
     </footer>
     <!-- Footer Section End -->
 
-    <!-- Search model Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch"><i class="icon_close"></i></div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
-
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/player.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/nice-select.js"></script>
     <script src="js/mixitup.min.js"></script>
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
-    <!-- Custom JavaScript for Episode Switching and Breadcrumb Update -->
-   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const episodeLinks = document.querySelectorAll('.anime__details__episodes a');
-        const videoPlayer = document.getElementById('drive-player');
-        const episodeLabel = document.getElementById('episode-label');
-        const nextSeasonLink = document.getElementById('next-season');
+    <script>
+        // JavaScript to handle the episode selection and storing progress in localStorage
+        document.addEventListener("DOMContentLoaded", function() {
+            const episodeLinks = document.querySelectorAll(".anime__details__episodes a");
+            const drivePlayer = document.getElementById("drive-player");
+            const episodeLabel = document.getElementById("episode-label");
 
-        // Get current season from the URL or default to Season 1
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentSeason = urlParams.get('season') || '1'; // Default to season 1 if no season is provided
-
-        // Create a storage key that is unique to the current season
-        const storageKey = `lastWatchedEpisode_S${currentSeason}`;
-
-        // Function to update the video player, breadcrumb, and active link
-        function updateEpisode(episodeNumber) {
-            const episodeLink = Array.from(episodeLinks).find(link => link.getAttribute('data-episode') === episodeNumber);
-
-            // Update the video player and breadcrumb label
-            if (episodeLink) {
-                videoPlayer.setAttribute('src', episodeLink.getAttribute('data-video-url'));
-                episodeLabel.textContent = `Season ${currentSeason}, Episode ${episodeNumber}`;
-                localStorage.setItem(storageKey, episodeNumber); // Store last watched episode for the current season
-
-                // Remove 'active' class from all links, then add it to the current link
-                episodeLinks.forEach(link => link.classList.remove('active'));
-                episodeLink.classList.add('active');
-            }
-        }
-
-        // Get the episode number from URL query parameters or localStorage
-        const episodeNumber = urlParams.get('episode') || localStorage.getItem(storageKey) || '01';
-        updateEpisode(episodeNumber); // Highlight and load the correct episode on page load
-
-        // Handle episode switching
-        episodeLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const episode = this.getAttribute('data-episode');
-                updateEpisode(episode);
-                // Update the URL query parameter without reloading the page
-                history.pushState(null, '', `?season=${currentSeason}&episode=${episode}`);
-            });
-        });
-
-        // Handle Next Season button click
-        if (nextSeasonLink) {
-            nextSeasonLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                const lastWatchedEpisode = localStorage.getItem(storageKey) || '01'; // Get last watched episode from the current season
-                const nextSeasonUrl = this.getAttribute('data-next-season-url');
-                
-                // Ensure the episode is properly passed as a URL parameter
-                if (lastWatchedEpisode) {
-                    // Navigate to the next season and carry over the episode number
-                    window.location.href = `${nextSeasonUrl}?season=${parseInt(currentSeason) + 1}&episode=${lastWatchedEpisode}`;
-                } else {
-                    // Fallback if no last watched episode is found
-                    window.location.href = `${nextSeasonUrl}?season=${parseInt(currentSeason) + 1}&episode=01`;
+            // Retrieve the last watched episode from localStorage
+            const lastWatchedEpisode = localStorage.getItem("lastWatchedEpisode");
+            if (lastWatchedEpisode) {
+                const lastWatchedLink = document.querySelector(`.anime__details__episodes a[data-episode="${lastWatchedEpisode}"]`);
+                if (lastWatchedLink) {
+                    updatePlayer(lastWatchedLink);
                 }
+            }
+
+            // Add click event listeners to all episode links
+            episodeLinks.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    updatePlayer(link);
+                });
             });
-        }
-    });
-</script>
 
+            // Function to update player source and active episode
+            function updatePlayer(link) {
+                const videoUrl = link.getAttribute("data-video-url");
+                const episodeNumber = link.getAttribute("data-episode");
+                drivePlayer.src = videoUrl;
+                episodeLabel.textContent = `Episode ${episodeNumber}`;
+
+                // Update active class
+                episodeLinks.forEach(link => link.classList.remove("active"));
+                link.classList.add("active");
+
+                // Store the last watched episode in localStorage
+                localStorage.setItem("lastWatchedEpisode", episodeNumber);
+            }
+        });
+    </script>
 </body>
-
 </html>
