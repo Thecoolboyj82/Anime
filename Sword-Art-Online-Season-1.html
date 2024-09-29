@@ -78,37 +78,43 @@
 
     <!-- Anime Section Begin -->
     <section class="anime-details spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="anime__video__player">
-                    <video controls disablePictureInPicture id="anime-video" style="width: 100%; height: auto;">
-                        <source id="video-source" src="https://drive.google.com/file/d/19HuwQUtwfeLed2g9mG8TOQ0J0PS2EDHw/preview" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="anime__details__episodes">
-                    <div class="section-title">
-                        <h5>Episode Selector</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="anime__video__player">
+                        <div style="padding:56.25% 0 0 0;position:relative;">
+                            <iframe 
+                                id="drive-player"
+                                src="https://drive.google.com/file/d/19HuwQUtwfeLed2g9mG8TOQ0J0PS2EDHw/preview" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                                title="anime_episode_1">
+                            </iframe>
+                        </div>
                     </div>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/19HuwQUtwfeLed2g9mG8TOQ0J0PS2EDHw/preview" data-episode="01">Ep 01</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1es330kbrm01MeMFtxVh_BLI0PB5TCDYp/preview" data-episode="02">Ep 02</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1Cuu2MjDQxFxtnV2X1rC6DHhB8uY7P5Co/preview" data-episode="03">Ep 03</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1_FG9r7p-NSNkkuFjsV2VtY47XvtCcou9/preview" data-episode="04">Ep 04</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1lGoG6whcm4CDntHJMJ4ezALJUxrmphcn/preview" data-episode="05">Ep 05</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/109OqyWRmDXZ4AxxENTjLQsdzxaixpYum/preview" data-episode="06">Ep 06</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1u2Cwbzaw9z3U9z9TbIb-J72LBy_EhFCW/preview" data-episode="07">Ep 07</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/12pX4kOkrqarxnyTs_LAQtTm9kLfP9sVO/preview" data-episode="08">Ep 08</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1u_uzQu4PJ9Zm5ry2c4eneuz02qDv53HJ/preview" data-episode="09">Ep 09</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1mYk48QqILWpxWkGTCHvpEP3aHigmG5RY/preview" data-episode="10">Ep 10</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/10D9SMMO63XxQAXo1Y3eeuR8Mc3iE1sl/preview" data-episode="11">Ep 11</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/1d8lqmKS-59xlYTLg0ScTpG-0g-5v27Ew/preview" data-episode="12">Ep 12</a>
-                    <a href="#" data-video-url="https://drive.google.com/file/d/19ekE4xiSxRzABc8BzKL3B5nC7KxqXLgG/preview" data-episode="13">Ep 13</a>
+                    <div class="anime__details__episodes">
+                        <div class="section-title">
+                            <h5>Episode Selector</h5>
+                        </div>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/19HuwQUtwfeLed2g9mG8TOQ0J0PS2EDHw/preview" data-episode="01">Ep 01</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1es330kbrm01MeMFtxVh_BLI0PB5TCDYp/preview" data-episode="02">Ep 02</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1Cuu2MjDQxFxtnV2X1rC6DHhB8uY7P5Co/preview" data-episode="03">Ep 03</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1_FG9r7p-NSNkkuFjsV2VtY47XvtCcou9/preview" data-episode="04">Ep 04</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1lGoG6whcm4CDntHJMJ4ezALJUxrmphcn/preview" data-episode="05">Ep 05</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/109OqyWRmDXZ4AxxENTjLQsdzxaixpYum/preview" data-episode="06">Ep 06</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1u2Cwbzaw9z3U9z9TbIb-J72LBy_EhFCW/preview" data-episode="07">Ep 07</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/12pX4kOkrqarxnyTs_LAQtTm9kLfP9sVO/preview" data-episode="08">Ep 08</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1u_uzQu4PJ9Zm5ry2c4eneuz02qDv53HJ/preview" data-episode="09">Ep 09</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1mYk48QqILWpxWkGTCHvpEP3aHigmG5RY/preview" data-episode="10">Ep 10</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/10D9SMMO63XxQAXo1Y3eeuR8Mc3iE1sl/preview" data-episode="11">Ep 11</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/1d8lqmKS-59xlYTLg0ScTpG-0g-5v27Ew/preview" data-episode="12">Ep 12</a>
+                        <a href="#" data-video-url="https://drive.google.com/file/d/19ekE4xiSxRzABc8BzKL3B5nC7KxqXLgG/preview" data-episode="13">Ep 13</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
     <!-- Anime Section End -->
 
     <!-- Footer Section Begin -->
