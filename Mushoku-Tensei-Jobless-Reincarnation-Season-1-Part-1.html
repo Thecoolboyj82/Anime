@@ -167,46 +167,52 @@
             const videoPlayer = document.getElementById('drive-player');
             const episodeLabel = document.getElementById('episode-label');
             const nextSeasonLink = document.getElementById('next-season');
-
-            // Function to update video, breadcrumb, and active link
+            
+            const urlParams = new URLSearchParams(window.location.search); // Added this line
+            const currentSeason = '1-1'; // Default to season 2
+            const storageKey = `lastWatchedEpisode_S${currentSeason}`;
+    
             function updateEpisode(episodeNumber) {
+                console.log('Updating episode to:', episodeNumber); // Debugging line
                 const episodeLink = Array.from(episodeLinks).find(link => link.getAttribute('data-episode') === episodeNumber);
-
-                // Update the video player and breadcrumb label
+    
                 if (episodeLink) {
                     videoPlayer.setAttribute('src', episodeLink.getAttribute('data-video-url'));
-                    episodeLabel.textContent = `Episode ${episodeNumber}`;
-                    localStorage.setItem('lastWatchedEpisode', episodeNumber); // Store last watched episode
-
-                    // Remove 'active' class from all links, then add it to the current link
+                    episodeLabel.textContent = `Season ${currentSeason}, Episode ${episodeNumber}`;
+                    localStorage.setItem(storageKey, episodeNumber);
+    
                     episodeLinks.forEach(link => link.classList.remove('active'));
                     episodeLink.classList.add('active');
+                } else {
+                    console.log('Episode not found, resetting to Ep 01.'); // Debugging line
+                    videoPlayer.setAttribute('src', episodeLinks[0].getAttribute('data-video-url'));
+                    episodeLabel.textContent = `Season ${currentSeason}, Episode 01`;
+                    localStorage.setItem(storageKey, '01');
+                    episodeLinks.forEach(link => link.classList.remove('active'));
+                    episodeLinks[0].classList.add('active');
                 }
             }
-
-            // Get the episode number from URL query parameters or localStorage
-            const urlParams = new URLSearchParams(window.location.search);
-            const episodeNumber = urlParams.get('episode') || localStorage.getItem('lastWatchedEpisode') || '01';
-            updateEpisode(episodeNumber);  // Highlight the correct episode on page load
-
-            // Handle episode switching
+    
+            const episodeNumber = urlParams.get('episode') || localStorage.getItem(storageKey) || '01';
+            updateEpisode(episodeNumber);
+    
             episodeLinks.forEach(link => {
                 link.addEventListener('click', function(event) {
                     event.preventDefault();
                     const episode = this.getAttribute('data-episode');
                     updateEpisode(episode);
-                    // Update the URL query parameter without reloading the page
-                    history.pushState(null, '', `?episode=${episode}`);
+                    history.pushState(null, '', `?season=${currentSeason}&episode=${episode}`);
                 });
             });
-
-            // Handle Next Season button click
+    
             if (nextSeasonLink) {
                 nextSeasonLink.addEventListener('click', function(event) {
                     event.preventDefault();
+                    const nextSeasonNumber = parseInt(currentSeason) + 1;
+                    const nextSeasonStorageKey = `lastWatchedEpisode_S${nextSeasonNumber}`;
+                    const lastWatchedEpisodeNextSeason = localStorage.getItem(nextSeasonStorageKey) || '01';
                     const nextSeasonUrl = this.getAttribute('data-next-season-url');
-                    // Navigate to the next season with the last watched episode number
-                    window.location.href = `${nextSeasonUrl}?episode=${localStorage.getItem('lastWatchedEpisode') || '01'}`;
+                    window.location.href = `${nextSeasonUrl}?season=${nextSeasonNumber}&episode=${lastWatchedEpisodeNextSeason}`;
                 });
             }
         });
